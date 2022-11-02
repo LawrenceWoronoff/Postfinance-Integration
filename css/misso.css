@@ -1,0 +1,192 @@
+body {
+	background-color: black;
+	font-family: 'Open Sans', sans-serif;
+	color:#fff;
+}
+
+.sto {
+	width: 100%;
+}
+
+.align-right {
+	text-align: right;
+}
+
+.semiheader {
+	width: 100%;
+	/*height: 60px;*/
+	background-color: #a30810;
+	text-align: center;
+}
+
+.adresse p {
+	text-align: right;
+	color: white;
+}
+
+.semiheader p {
+	text-align: center;
+	color: white;
+	font-size: 1.6em;
+}
+
+.logo p {
+	margin-top: 30px;
+	margin-left: 140px;
+	color: white;
+	font-size: 32px;
+}
+
+.logo {
+	background: transparent url("../images/logoMissOheader.png") no-repeat 20px top;
+	height: 130px;
+}
+
+label {
+	color: white;
+}
+
+.form-control {
+	background-color: #a07d66;
+	color: black;
+}
+
+
+
+.imagemass p {
+	bottom:-10px;
+	left:0;
+	position:absolute;
+	background-color: rgba(97, 67, 31 ,0.6);
+	height:30px;
+	padding-right:40px;
+	padding-left:10px;
+	font-size:1.5em;
+	width:auto;
+}
+
+
+.presselegende {
+	margin-top:5px;
+	margin-bottom:25px;
+	font-size:1.4em;
+}
+
+.presselegende p {
+	font-size:0.7em;
+}
+
+
+
+.legende {
+	margin-top:5px;
+	margin-bottom:25px;
+	font-size:1.1em;
+}
+
+.legende p {
+	font-size:0.7em;
+}
+
+
+.description {
+	margin-top:10px;
+	display:none;
+	margin-bottom:25px;
+
+}
+.pressedescription {
+	margin-top:10px;
+	display:none;
+	margin-bottom:25px;
+
+}
+
+.viewlegende {
+	margin-top:5px;
+	margin-bottom:25px;
+
+}
+.viewdescription {
+	margin-top:10px;
+	display:block;
+	margin-bottom:25px;
+
+}
+
+.prix {
+	font-size:1.6em;
+
+}
+
+.handy {
+	cursor:pointer;
+}
+
+.divfooter {
+	background-color:rgba(255,255,255,0.3);
+	margin-top:40px;
+}
+
+.divlogo {
+	margin-top:50px;
+}
+
+.bloc {
+
+	padding:10px;
+	font-size:1.1em;
+}
+
+@media screen and (max-width: 640px) {
+.semiheader p {
+    font-size: 1.2em;
+}
+
+.semiheader {
+
+    height: auto;
+
+
+}
+.imagemass p {
+	font-size:1.1em;
+
+}
+
+}
+
+.btn-danger {
+    background-color: transparent;
+    background-image: none;
+    border-color: #fff;
+}
+
+
+.btn-danger.active, .btn-danger:active {
+    background-color: transparent;
+    border-color: #b92c28;
+}
+
+a.awhite{
+	font-weight:bolder;
+	color:#c00;
+}
+
+	a {
+	color:darkred;
+
+	}
+
+.day {
+	color:black;
+	}
+
+.form-control {
+	color:white;
+}
+
+.form-group{
+margin-bottom:15px;
+height:45px;
+} 

@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>Titre de la page</title>
+  <style type="text/css">
+	.test {
+		width:100px;
+		height:100px;
+		background-color:blue;
+	}
+  	.blue {
+		width:200px;
+		height:200px;
+		background-color:cyan;
+	}
+  </style>
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  
+  <script type="text/javascript">
+	$( document ).ready(function() { 
+		$("#toto").click( function() {
+			$("div").add("span").addClass("blue").html("slow");
+			alert("Hello");
+		});
+	});
+  </script>
+</head>
+<body>
+ 
+ <div class="test"></div>
+ <div id="toto">CLICK</div>
+ <p>ddd</p>
+ 
+</body>
+</html>

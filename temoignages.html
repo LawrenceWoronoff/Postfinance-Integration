@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<head>
+    <title>La Luncheonette -   Home</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="icon" href="https://www.freshii.com/static/images/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="https://www.freshii.com/static/images/favicon.ico" type="image/x-icon">
+
+    <!--[if IE]>  
+	    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>  
+	<![endif]-->  
+
+    <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Rokkitt:400,700' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link href='static/css/style.css' rel='stylesheet' type='text/css'>  
+
+</head>
+<body>
+
+
+    <div class='slider'>
+    <div class='container'>
+    <div style="position:absolute;top:140px;right:100px;z-index:100;"><a href="images/Menuwebsite.pdf" target="_blank"><img src="images/fleche.jpg" /></a></div>	
+	
+        <div class='row'>
+            <div class='col-sm-8'>
+                <div class='slider-content'>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class='slide-control slide-control-left'>
+        <i class='fa fa-angle-left'></i>
+    </div>
+    <div class='slide-control slide-control-right'>
+        <i class='fa fa-angle-right'></i>
+    </div>
+    <div class='slide-control slide-control-center'>
+    </div>
+
+
+</div>
+
+
+
+
+    
+
+
+    
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <!--script>window.jQuery || document.write('<script src="static/js/bower_components/jquery/dist/jquery.min.html"><\/script>')</script-->
+    <script src="static/js/bower_components/underscore/underscore.js"></script>
+    <script src="static/js/bower_components/jquery.easing/js/jquery.easing.min.js"></script>
+    <script src="static/js/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="static/js/bower_components/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+    <script src="static/js/main.js"></script>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCp0kuwOUXLkGchJqYdio4_0xLcJmFmwPE&amp;sensor=false"></script>
+
+    <script>
+
+        
+        $('select').selectpicker({
+            dropupAuto: false
+        }).css({
+            'display': 'none',
+            'visibility': 'none',
+            'position': 'fixed'
+        });
+
+        $('#back-to-top').on('click', function () {
+            $('html, body').animate({
+                scrollTop: 0
+            }, 1000, 'easeOutSine');
+        });
+
+        $('.my-location').on('click', function () {
+            App.showLocationSelector(true, function (loc) {
+                window.location.href = '?set_store=' + loc.store_code;
+            });
+        });
+
+        
+       
+    </script>
+
+    <script src="static/js/bower_components/jquery-backstretch/jquery.backstretch.min.js"></script>
+<script>
+    (function () {
+        var slides = [{
+                img: "images/sliderhome/misso_home_pic1.jpg",
+                img_tablet: "images/sliderhome/misso_home_pic1.jpg",
+                img_mobile: "images/sliderhome/misso_home_pic1.jpg",
+                caption: "<div class='animate animate-slidein-1st style1' style='color:#EE1C25;'>Andenmatten Ghislaine</div><div class='animate animate-slidein-2nd style2'>Un vrai moment de d&eacute;tente bienvenu apr&egraves le stress des f&ecirc;tes</div><div class='animate animate-slidein-3rd'></div>",
+            },
+            {
+                img: "images/sliderhome/misso_home_pic2.jpg",
+                img_tablet: "images/sliderhome/misso_home_pic2.jpg",
+                img_mobile: "images/sliderhome/misso_home_pic2.jpg",
+                caption: "<div class='animate animate-slidein-1st style1'style='color:#EE1C25;'>Oscar C </div><div class='animate animate-slidein-2nd style2'> Grand moment d'&eacute;vasion mais toujours en ville </div><div class='animate animate-slidein-3rd'></div>",
+             },
+            {
+                img: "images/sliderhome/misso_home_pic3.jpg",
+                img_tablet: "images/sliderhome/misso_home_pic3.jpg",
+                img_mobile: "images/slideaccueil/misso_home_pic3.jpg",
+                caption: "<div class='animate animate-slidein-1st style1'style='color:#EE1C25;'>C@roline</div><div class='animate animate-slidein-2nd style2'>Une v&eacute;ritable ambiance de voyage lointain. Une magnifique service.Un tr&egraves beau moment. Merci</div><div class='animate animate-slidein-3rd'></div>",
+            },
+            {
+               img: "images/sliderhome/misso_home_pic4.jpg",
+                img_tablet: "images/sliderhome/misso_home_pic4.jpg",
+                img_mobile: "images/sliderhome/misso_home_pic4.jpg",
+                caption: "<div class='animate animate-slidein-1st style1'style='color:#EE1C25;'>Rosi</div><div class='animate animate-slidein-2nd style2'>Adepte d&egraves l'ouverture, on devient accro au bien &ecirc;tre et &aacute tous les soins propos&eacutes ! Un endroit que je conseille &aacute tout un chacun...</div><div class='animate animate-slidein-3rd'></div>",
+             } 
+                   ];
+
+
+        var $slider = $(".slider");
+        // add event handlers to left and right
+        $slider.find('.slide-control-left').on('click', function () { $slider.backstretch('prev'); });
+        $slider.find('.slide-control-right').on('click', function () { $slider.backstretch('next'); });
+        // create the dots
+        _.each(slides, function (s, i) {
+            $ctr = $("<i class='fa fa-circle'></i>").on('click', function () {
+                $slider.backstretch('show', i);
+            });
+            $slider.find(".slide-control-center").append($ctr);
+        });
+        var screen = "img";
+        var width = $(window).width();
+        if (width < 768) { // mobile
+            screen = "img_mobile";
+        } else if (width >= 768 && width < 992) { // tablet
+            screen = "img_tablet";
+        } 
+        $slider.backstretch(_.pluck(slides, screen), {
+            fade: 'slow', 
+            duration: 12000
+        }).on("backstretch.before", function (e, instance, index) {
+            $(this).find('.slider-content .animate').addClass('animate-exit');
+        }).on("backstretch.after", function (e, instance, index) {
+            //instance.$img.css("left", "0");
+            //instance.$img.css("transition", "all 15s ease-out");
+            //instance.$img.css("-webkit-transform", "translateX(100px)");
+            //instance.$img.css("-webkit-transform", "scale(1.2, 1.2)");
+            /*
+            instance.$img.animate({
+                left: "0"
+            }, 20000);
+            */
+            var $content = $slider.find('.slider-content').html(slides[index].caption);
+            $slider.find('.slide-control-center > i:nth-child(' + (index + 1) + ')').addClass('active').siblings().removeClass('active')
+            setTimeout(function () {
+                $content.find('.animate').addClass('animate-enter');
+            }, 1);
+        });
+
+        var backstretch = $slider.data('backstretch');
+        var resizeHandler = function () {
+            width = $(window).width();
+            if (width < 768 && screen !== 'img_mobile') { // mobile
+                screen = 'img_mobile'
+                backstretch.images = _.pluck(slides, screen);
+            } else if (width >= 768 && width < 992 && screen !== 'img_tablet') { // tablet
+                screen = 'img_tablet'
+                backstretch.images = _.pluck(slides, screen);
+            } else { // medium to large (>1200)
+                if (screen !== 'img') {
+                    screen = 'img'
+                    backstretch.images = _.pluck(slides, screen);
+                }
+            }
+        }
+        $(window).resize(resizeHandler);
+        resizeHandler();
+
+      
+    })();
+</script>
+</body>
+
+
+</html>

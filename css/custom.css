@@ -1,0 +1,183 @@
+@import url(http://fonts.googleapis.com/css?family=Lora:400,700);
+@import url(http://fonts.googleapis.com/css?family=Montserrat:700,400);
+
+body {
+  font-family: 'Montserrat', sans-serif;
+}
+
+
+
+.jumbotron {
+  text-align: center;
+  background: url(https://placeimg.com/1200/380/people);
+  background-size: cover;
+  color: #fff;
+  background-color: transparent;
+
+}
+
+.modal {
+  color: #333;
+}
+
+.item {
+  padding: 0 10%;
+  color: #fff;
+height:600px;
+ border:0px solid white;
+}
+
+.item .active {
+  padding: 0 10%;
+  color: #fff;
+
+}
+
+.item h1 {
+  text-shadow: 3px 3px 20px #000;
+}
+
+p {
+  margin: 0;
+}
+
+.carousel-control.left,
+.carousel-control.right {
+  background: transparent;
+}
+
+.carousel-indicators {
+  display: none;
+}
+
+.carousel-control .icon-prev,
+.carousel-control .icon-next,
+.carousel-control .glyphicon-backward,
+.carousel-control .glyphicon-forward,
+.carousel-control .icon-prev,
+.carousel-control .icon-next,
+.carousel-control .glyphicon-circle-arrow-left,
+.carousel-control .glyphicon-circle-arrow-right {
+position: absolute;
+top: 50%;
+z-index: 5;
+display: inline-block;
+}
+
+.carousel-control .glyphicon-backward,
+.carousel-control .glyphicon-forward,
+.carousel-control .icon-prev,
+.carousel-control .icon-next,
+.carousel-control .glyphicon-circle-arrow-left,
+.carousel-control .glyphicon-circle-arrow-right,
+.carousel-control .icon-prev,
+.carousel-control .icon-next {
+width: 30px;
+height: 30px;
+margin-top: -15px;
+margin-left: -15px;
+font-size: 30px;
+}
+
+.footer {
+  margin: 50px 0 0 0;
+  padding: 20px 0;
+  background: #e7e7e7;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.carousel-inner {
+	height:600px;
+	background-color:#444;
+}
+@media only screen and (min-width : 320px) and (max-width: 767px)  {
+.navbar-toggle {
+   background-color: #333;
+}
+
+
+  .row.body {
+    text-align: center;
+  }
+
+  .row.body div {
+    border-bottom: 1px solid #ccc;
+    padding:  0 10px 20px 10px;
+    margin: 0 20px;
+  }
+
+}
+.navbar {
+    border: 0px solid transparent;
+    margin-bottom: 0px;
+    min-height: 10px;
+    position: relative;
+}
+.modal-dialog {
+    margin: 160px auto;
+
+}
+.modal-content {
+
+    background-color: rgba(255,255,255,0.7);
+
+}
+.navbar-inverse {
+    background-color: #444;
+    border-color: #444;
+}
+
+.navbar-inverse .navbar-nav > .active > a, .navbar-inverse .navbar-nav > .active > a:hover, .navbar-inverse .navbar-nav > .active > a:focus {
+    background-color: #444;
+    color: #fff;
+}
+
+
+
+.carousel-control {
+    width: 12%;
+}
+
+.btn {
+	z-index:80;
+}
+
+h1 {
+    margin-bottom: 10px;
+    margin-top: 0px;
+}
+
+.item {
+
+    padding: 0 12%;
+}
+
+.navbar {
+    border-radius: 0px;
+}
+
+.payment-background {
+  background: #f5f5f5;
+  border-left: 1px solid #d7d7d7;
+  position: fixed;
+  height: 100%;
+  left: 50%;
+  right: 0;
+  z-index: -1;
+  margin-left: 56px;
+}
