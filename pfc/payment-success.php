@@ -29,14 +29,21 @@
 
     $files = array();
     require_once "../lib/php/php_to_pdf/phpToPDF.php";
+    
+    $price = 0;
+    $tableuxMail = "";
 
     foreach($elements as $labels){
+        $price += $labels["Prix"] * $labels["Qte"];
+
+
         $BC = substr($labels["payReference"] . "-" . $labels["id"],2) ;
+	    $tableuxMail.= $BC . " " . $labels["Libelle"] . " " . $labels["Article"] . " ( CHF " . $labels["Prix"] . ")<br />";
+
         $completeFile = "../boncommande"."/" . $BC  .  ".pdf";
         $files[] = $completeFile;
         // echo $completeFile;
     
-        // $tableuxMail.= $BC . " " . $labels["Libelle"] . " " . $labels["Article"] . " ( CHF " . $labels["Article"] . ")";
         $libelle = str_replace( "'","-", $labels["Libelle"]);
         $libelle = str_replace( " ","-", $labels["Libelle"]);
         $libelle =  utf8_decode($labels["Libelle"]) . " "  .  $labels["Article"];
@@ -49,9 +56,9 @@
         $PTP->SetTextColor(90, 90, 90);
         $PTP->SetFont("helvetica", "", 14);
         $PTP->Text(100, 34, iconv("UTF-8", "ISO-8859-1", "N° bon"));
-        $PTP->Text(135, 34, $BC);
+        $PTP->Text(130, 34, $BC);
         $PTP->Text(100, 51, "Date");
-        $PTP->Text(135, 51, date("d.m.Y"));
+        $PTP->Text(130, 51, date("d.m.Y"));
     
         $PTP->SetFont("helvetica", "", 16);
         $PTP->Text(15, 241.5, $libelle);
@@ -62,26 +69,33 @@
     
         $PTP->Output($completeFile, "F");
     }
-
     require_once "../lib/php/mail.inc";
 
     if(count($elements) != 0) {
         $email = $elements[0]['email'];
+        $nom = $elements[0]['nom'];
+        $prenom = $elements[0]['prenom'];
+        $cp= $elements[0]["cp"];
+        $adresse= $elements[0]["adresse"];
+        $localite= $elements[0]["localite"];
+        $telephone= $elements[0]["telephone"];
+
         $Em = new email;
 
         $Em->mail_item(array("reply" => "thaistyle@massagemisso.ch"), array("addr" => $email, "objet" => "Misso - Bon commande", "msg" => "Bonjour, <br /><br />Veuillez trouver en pièce jointe le ou les bons de commande pour les massages que vous avez commandés.<br /><br />"), $files);
     
-        // $MSG = "Bonjour, <br /><br />Le client : <br /><br />Nom : $nom<br />Prénom : $prenom<br />Email : $email<br />Code postal : $cp<br />Adresse : $adresse<br />Ville : $localite<br />Téléphone : $telephone<br /><br />a payé CHF $price.-<br /><br />Type de paiement : Postfinance<br />OrderID : " . $_REQUEST["orderID"] . "<br />Prix : $price CHF<br />IP : $IP<br /><br />pour les produits suivants : <br /><br />$tableuxMail<br />";
+        $MSG = "Bonjour, <br /><br />Le client : <br /><br />Nom : $nom<br />Prénom : $prenom<br />Email : $email<br />Code postal : $cp<br />Adresse : $adresse<br />Ville : $localite<br />Téléphone : $telephone<br /><br />a payé CHF $price.-<br /><br />Type de paiement : Postfinance<br />Prix : $price CHF<br />pour les produits suivants : <br /><br />$tableuxMail<br />";
         // $Em->mail_item(array("reply" => "no-replay@massagemisso.ch"), array("addr" => "thaistyle@massagemisso.ch", "objet" => "Commande de $prenom $nom", "msg" => $MSG), $files);
-    
-    
-        // $MSG = "Bonjour, <br /><br />Le client : <br /><br />Nom : $nom<br />Prénom : $prenom<br />Email : $email<br />Code postal : $cp<br />Adresse : $adresse<br />Ville : $localite<br />Téléphone : $telephone<br /><br />a payé CHF $price.-<br /><br />Type de paiement : Postfinance<br />OrderID : " . $_REQUEST["orderID"] . "<br />Prix : $price CHF<br />IP : $IP<br /><br />pour les produits suivants : <br /><br />$tableuxMail<br />";
+
+        $MSG = "Bonjour, <br /><br />Le client : <br /><br />Nom : $nom<br />Prénom : $prenom<br />Email : $email<br />Code postal : $cp<br />Adresse : $adresse<br />Ville : $localite<br />Téléphone : $telephone<br /><br />a payé CHF $price.-<br /><br />Type de paiement : Postfinance<br />Prix : $price CHF<br />pour les produits suivants : <br /><br />$tableuxMail<br />";
         // $Em->mail_item(array("reply" => "no-replay@massagemisso.ch"), array("addr" => "info@cyberiade.ch", "objet" => "xxx $order Commande de $prenom $nom", "msg" => $MSG), $files);
+        $Em->mail_item(array("reply" => "no-replay@massagemisso.ch"), array("addr" => "info@cyberiade.ch", "objet" => "Commande de $prenom $nom", "msg" => $MSG), $files);
     }
 
-    // Regenerate Session ID for next coming orders.
-    // ob_start();
-    // session_start();
+    DB::update('commandes', array(
+            'sate' => 'success'
+        ), "Session=%s",  $sessionId);   
+
     session_regenerate_id(true);
 ?>
 

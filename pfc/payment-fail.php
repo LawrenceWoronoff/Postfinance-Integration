@@ -19,6 +19,9 @@
     if(count($result) == 0)
         header('Location: ' . $baseurl);
 
+    DB::update('commandes', array(
+        'sate' => 'abort'
+        ), "Session=%s",  $sessionId);   
 ?>
 
 <html>
