@@ -269,11 +269,13 @@ $commandes = DB::query("SELECT *, commandes.Prix as prixfinal FROM commandes
 		        "<td>" . $commande['PAYID'] . "</td>";
 				
 				// "<td><a target='_blank' href='../boncommande/" . substr($commande['payReference'],2) . "-" .  $commande['id']. ".pdf'>" . $commande['payReference'] . "</a></td>" .
-				if($commande['sate'] != 'abort') {
+				if($commande['sate'] == 'success' || $commande['sate'] == '') {
 					echo "<td><a target='_blank' href='../boncommande/" . substr($commande['payReference'],2) . "-" .  $commande['id']. ".pdf'>" . $commande['payReference'] . "</a></td>";
-				} else {
+				} else if($commande['sate'] == 'ordered') {
+					echo "<td>Massage Ordered</td>";
+				} else if($commande['sate'] == 'abort') {
 					echo "<td>Payment Cancelled</td>";
-				}
+				} 
 
 		        echo "<td>
 

@@ -30,7 +30,7 @@ DB::insert('commandes', array(
 	'Prix' => $prixfini,
 	'Qte' => 1,
 	'Session' => session_id(),
-	
+	'sate' => 'ordered',
 	'Pack' => $package["ID"]
 ));
 
