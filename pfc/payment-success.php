@@ -1,8 +1,59 @@
 <?php
     include ("../init.php");
-
-    // Seek cart list for adding sale items
+    include 'pfc-config.php';
     $sessionId = session_id();
+
+    require_once (__DIR__. '/../pfc-sdk/autoload.php');
+
+    function decryptPayId($crypted)
+    {
+        $ascii = ord('a');
+        $pos = strpos($crypted, "-");
+        $crypted = substr($crypted, 0, $pos);
+        $payId = '';
+        for($i = 0; $i < strlen($crypted); $i++) {
+            $payId .= (ord($crypted[$i]) - $ascii);
+        }
+        return $payId;
+    }
+
+    if(!isset($_GET['payId'])){
+        echo "This is invalid payment injection";
+        return;
+    }
+    $payId = decryptPayId($_GET['payId']);
+    
+    // ========= Read Transaction State Variable and Check ======= //
+
+    // Setup API client
+    $client = new \PostFinanceCheckout\Sdk\ApiClient($userId, $secret);
+
+    $transactionId = $payId;
+    $transaction = $client->getTransactionService()->read($spaceId, $transactionId);
+    $status = $transaction->getState();
+
+    // Check if that transaction status is "success"
+    if($status != 'FULFILL' && $status != 'COMPLETED'){
+        echo "This is not completed postfinace transaction! Warn you to stop hacking our system!";
+        return;
+    }
+
+    // Check current successed transaction is for current orders. (Checking if PAYID and sessionId matched)
+    // If hacker tried to make payment on the already rejected payment transaction ID.
+    // But if it is new transaction which don't have payID, it will pass through well..
+    $elements = DB::query("SELECT * FROM commandes
+                            WHERE PAYID=%s", $payId);
+    // var_dump($elements[0]['PAYID']);
+    if(count($elements) != 0 && $elements[0]['Session'] != $sessionId){
+        echo "Transaction ID is not matched with current session Id! Warn you to stop hacking our system!";
+        return;
+    }
+
+    // We should add exception if there is no record related with that payId. But later...
+    ////////////////////////////////////////////////////////////
+    
+    // Seek cart list for adding sale items
+    
     $result = DB::query("SELECT *, count(*) as nb, commandes.Prix as prixfinal, packs.ID as PID FROM commandes
 
     INNER JOIN packs ON ( commandes.PAck = packs.ID )
@@ -15,12 +66,17 @@
 
     ", $sessionId);
 
-    if(count($result) == 0)
-        header('Location: ' . $baseurl);
+    if(count($result) == 0){
+        echo "There is no items in the bucket!";
+        return;
+    }
+        
+    // if(count($result) == 0)
+    //     header('Location: ' . $baseurl);
 
     // Get order details that are paid
     $elements = DB::query("SELECT * FROM commandes
-	    INNER JOIN packs ON ( packs.id = commandes.Pack )
+    	INNER JOIN packs ON ( packs.id = commandes.Pack )
 	    INNER JOIN prestations ON ( packs.PrestationID = prestations.ID )
 		WHERE Session=%s", $sessionId);
 
@@ -80,6 +136,9 @@
         $localite= $elements[0]["localite"];
         $telephone= $elements[0]["telephone"];
 
+        // ======= Email Sending ======== //
+
+        
         $Em = new email;
 
         $Em->mail_item(array("reply" => "thaistyle@massagemisso.ch"), array("addr" => $email, "objet" => "Misso - Bon commande", "msg" => "Bonjour, <br /><br />Veuillez trouver en pièce jointe le ou les bons de commande pour les massages que vous avez commandés.<br /><br />"), $files);
@@ -90,15 +149,16 @@
         $MSG = "Bonjour, <br /><br />Le client : <br /><br />Nom : $nom<br />Prénom : $prenom<br />Email : $email<br />Code postal : $cp<br />Adresse : $adresse<br />Ville : $localite<br />Téléphone : $telephone<br /><br />a payé CHF $price.-<br /><br />Type de paiement : Postfinance<br />Prix : $price CHF<br />pour les produits suivants : <br /><br />$tableuxMail<br />";
         // $Em->mail_item(array("reply" => "no-replay@massagemisso.ch"), array("addr" => "info@cyberiade.ch", "objet" => "xxx $order Commande de $prenom $nom", "msg" => $MSG), $files);
         $Em->mail_item(array("reply" => "no-replay@massagemisso.ch"), array("addr" => "info@cyberiade.ch", "objet" => "Commande de $prenom $nom", "msg" => $MSG), $files);
+        
     }
 
     DB::update('commandes', array(
-            'sate' => 'success'
+            'sate' => 'success',
+            'PAYID' => $payId
         ), "Session=%s",  $sessionId);   
 
     session_regenerate_id(true);
 ?>
-
 <html>
 
 <head>
@@ -136,10 +196,10 @@
                 <div style="border-bottom:solid 1px lightgray; padding:20px 0px;">
                     <?php $total = 0; foreach($result as $row) { ?>
                     <div class="d-flex justify-content-between">
-                        <p><?php echo $row['Libelle']. ' ('. $row['Prestation']. ')' ?></p>
-                        <p>CHF <?php echo number_format($row['Prix'], 2)?></p>
+                        <p><?php echo $row['Libelle']. ' ('. $row['Prestation']. ')' ?> <?php echo (int)$row[nb] == 1 ? '' : (' X '. $row[nb]) ?></p>
+                        <p>CHF <?php echo number_format((int)$row['Prix'] * (int)$row['nb'], 2)?></p>
                     </div>
-                    <?php $total += $row['Prix'];} ?>
+                    <?php $total += (int)$row['Prix'] * (int)$row['nb'];} ?>
                 </div>
                 <div style="border-bottom:solid 1px lightgray; padding:20px 0px;">
                     <div class="d-flex justify-content-between">

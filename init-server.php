@@ -28,6 +28,6 @@ $baseurl = sprintf(     // In main server, we will remove 'massage' in URL
     "%s://%s",
     isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off' ? 'https' : 'http',
     $_SERVER['SERVER_NAME']
-  ). '/massage';
+  ). '/testpfc';
 
 ?>

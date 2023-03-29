@@ -1,7 +1,6 @@
 <?php
-
 include ("init.php");
-
+include ("pfc/pfc-config.php");
 
 require_once "command_factory.inc";
 
@@ -11,6 +10,27 @@ require_once (__DIR__. '/pfc-sdk/autoload.php');
 
 header('Content-Type: text/html; charset=utf-8');
 
+function generateRandomString($length = 10) {
+    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $charactersLength = strlen($characters);
+    $randomString = '';
+    for ($i = 0; $i < $length; $i++) {
+        $randomString .= $characters[random_int(0, $charactersLength - 1)];
+    }
+    return $randomString;
+}
+
+function encryptPayId($payId)
+{
+    $ascii = ord('a');
+    $crypted = '';
+    $payId = (string) $payId;
+    for($i = 0; $i < strlen($payId); $i++) {
+        $a = 'a';
+        $crypted .= chr($ascii + (int)$payId[$i]);
+    }
+    return $crypted. "-". generateRandomString();
+}
 
 
 $content = "<h1>Votre demande est analysée avant d'être transférée chez Postfinance. Patientez svp.</h1>";
@@ -62,11 +82,6 @@ $content = "<h1>Votre demande est analysée avant d'être transférée chez Post
 
         ", $sessionId);
 
-        // Configuration
-
-        $spaceId = 405;
-        $userId = 512;
-        $secret = 'FKrO76r5VwJtBrqZawBspljbBNOxp5veKQQkOnZxucQ=';
 
         // Setup API client
         $client = new \PostFinanceCheckout\Sdk\ApiClient($userId, $secret);
@@ -79,8 +94,8 @@ $content = "<h1>Votre demande est analysée avant d'être transférée chez Post
             $lineItem->setName($row['Libelle']. ' ('. $row['Prestation']. ')');
             $lineItem->setUniqueId($row['id']);
             // $lineItem->setSku('red-t-shirt-123');
-            $lineItem->setQuantity(1);
-            $lineItem->setAmountIncludingTax((int)$row['Prix']);
+            $lineItem->setQuantity((int)$row['nb']);
+            $lineItem->setAmountIncludingTax((int)$row['Prix'] * (int)$row['nb']);
             $lineItem->setType(\PostFinanceCheckout\Sdk\Model\LineItemType::PRODUCT);
 
             array_push($items, $lineItem);
@@ -91,31 +106,26 @@ $content = "<h1>Votre demande est analysée avant d'être transférée chez Post
         $transactionPayload->setLineItems($items);
         $transactionPayload->setAutoConfirmationEnabled(true);
 
-        // $baseurl = sprintf(
-        //     "%s://%s",
-        //     isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off' ? 'https' : 'http',
-        //     $_SERVER['SERVER_NAME']
-        //   );
-
-        $transactionPayload->setSuccessUrl($baseurl. "/pfc/payment-success.php");   
-        $transactionPayload->setFailedUrl($baseurl. "/pfc/payment-fail.php");
-
-
         $transaction = $client->getTransactionService()->create($spaceId, $transactionPayload);
+        $transactionId = $transaction->getId();
+
+        $transactionPending = new \PostFinanceCheckout\Sdk\Model\TransactionPending();
+        $transactionPending->setSuccessUrl($baseurl. "/pfc/payment-success.php?payId=". encryptPayId($transactionId));
+        $transactionPending->setFailedUrl($baseurl. "/pfc/payment-fail.php?payId=". encryptPayId($transactionId));
+        $transactionPending->setId($transaction->getId());
+        $transactionPending->setVersion($transaction->getVersion());
+        $client->getTransactionService()->update($spaceId, $transactionPending);
 
         // Create Payment Page URL:
-        $redirectionUrl = $client->getTransactionPaymentPageService()->paymentPageUrl($spaceId, $transaction->getId());
+      
+        $redirectionUrl = $client->getTransactionPaymentPageService()->paymentPageUrl($spaceId, $transactionId);
         
         header('Location: ' . $redirectionUrl);
 
-				// $PostFinance = new PostFinance;
+        // $PostFinance = new PostFinance;
 
-				// $content .= $PostFinance->makeFormAutoSubmit( $CommandFacoty );
+        // $content .= $PostFinance->makeFormAutoSubmit( $CommandFacoty );
 
-
-
-                // echo $content;
-
-
-
+        // echo $content;
+   
 ?>

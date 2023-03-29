@@ -281,40 +281,6 @@ $commandes = DB::query("SELECT *, commandes.Prix as prixfinal FROM commandes
 
 
 
-        <!--button id='sautPlus' type='button' class='btn btn-primary' aria-label='Left Align' onclick=\"document.location.href='new_photos.php?objetID=" . $massage['ID'] . "'\">
-
-					<span class='glyphicon glyphicon-camera' ></span>
-
-					Photo
-
-				</button>
-
-
-
-
-
-
-
-    <button id='sautPlus' type='button' class='btn btn-info' aria-label='Left Align' onclick=\"document.location.href='modi_massage.php?id=" . $massage['ID'] . "'\">
-
-					<span class='glyphicon glyphicon-edit' ></span>
-
-					Modifier cet article
-
-				</button>
-
-
-
-    <button id='sautPlus' type='button' class='btn btn-danger' aria-label='Left Align' onclick=\"document.location.href='bd_delete_massage.php?id=" . $massage['ID'] . "'\">
-
-					<span class='glyphicon glyphicon-remove' ></span>
-
-					Effacer cet article
-
-				</button-->
-
-
-
              </td></tr>";
 
 		    }
